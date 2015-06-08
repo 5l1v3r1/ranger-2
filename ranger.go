@@ -10,6 +10,7 @@ import (
 	"strings"
 	"strconv"
 	"bytes"
+	"fmt"
 )
 
 type CIDR struct {
@@ -39,6 +40,14 @@ type formatError struct {
 
 func (err formatError) Error() string {
 	return err.msg
+}
+
+func (cidr *CIDR) String() string {
+	if (cidr.mask == 32){
+		return intToIP(cidr.ip)
+	} else {
+		return fmt.Sprintf("%s/%d", intToIP(cidr.ip), cidr.mask)
+	}
 }
 
 func ipToInt(ip string) (int_ip uint32, err error) {
