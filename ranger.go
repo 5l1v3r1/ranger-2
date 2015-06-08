@@ -241,3 +241,15 @@ func Parse(line string) (subnets []CIDR, err error) {
 		return rangeSubnets(block_start, block_end), nil
 	}
 }
+
+func HostsCount(subnets []CIDR) (count uint) {
+	for _, subnet := range subnets {
+		if (subnet.mask == 32) {
+			count++
+		} else {
+			count += 2 << (uint)(31 - subnet.mask)
+		}
+	}
+
+	return
+}
